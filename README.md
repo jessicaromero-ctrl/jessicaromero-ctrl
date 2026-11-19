@@ -2,6 +2,8 @@
   <img src="./assets/header.svg" alt="Jessica Melani Romero Lora" width="100%">
 </p>
 
+<p align="center"><a href="https://jessicaromero-ctrl.github.io">Ver el perfil completo →</a></p>
+
 <br>
 
 ## Sobre mí

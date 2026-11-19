@@ -1,46 +1,109 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="340" viewBox="0 0 1200 340">
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="380" viewBox="0 0 1200 380">
   <defs>
-    <radialGradient id="halo" cx="0.82" cy="0.35" r="0.7">
-      <stop offset="0%" stop-color="#8400e0" stop-opacity="0.45"/>
-      <stop offset="100%" stop-color="#8400e0" stop-opacity="0"/>
+    <radialGradient id="glow" cx="0.80" cy="0.28" r="0.55">
+      <stop offset="0%" stop-color="#39ff7a" stop-opacity="0.16"/>
+      <stop offset="100%" stop-color="#39ff7a" stop-opacity="0"/>
     </radialGradient>
-    <linearGradient id="trazo" x1="0" x2="1">
-      <stop offset="0%" stop-color="#8400e0"/>
-      <stop offset="100%" stop-color="#c77dff"/>
+    <radialGradient id="vineta" cx="0.5" cy="0.45" r="0.75">
+      <stop offset="55%" stop-color="#000" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0.85"/>
+    </radialGradient>
+    <linearGradient id="montana" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#39ff7a" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#39ff7a" stop-opacity="0.02"/>
     </linearGradient>
-    <pattern id="malla" width="40" height="40" patternUnits="userSpaceOnUse">
-      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#ffffff" stroke-opacity="0.04" stroke-width="1"/>
+    <pattern id="lineas" width="1" height="3" patternUnits="userSpaceOnUse">
+      <rect width="1" height="1" fill="#000" fill-opacity="0.35"/>
     </pattern>
-  </defs>
-  <style>
-    .base { fill: #0a0712; }
-    .nombre { font: 600 60px "Helvetica Neue", Arial, sans-serif; fill: #f5f0ff; letter-spacing: -1.2px; animation: subir 1.2s cubic-bezier(.2,.7,.2,1) both; }
-    .rol { font: 400 22px "Helvetica Neue", Arial, sans-serif; fill: #a99bc0; animation: subir 1.2s cubic-bezier(.2,.7,.2,1) 0.2s both; }
-    .etiqueta { font: 500 13px "Helvetica Neue", Arial, sans-serif; fill: #8f7fa8; letter-spacing: 3px; animation: subir 1.2s ease-out 0.5s both; }
-    .regla { stroke: url(#trazo); stroke-width: 2; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; animation: trazar 1.6s ease-in-out 0.3s forwards; }
-    .hoja { fill: none; stroke: #c77dff; stroke-width: 1.3; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 1; animation: trazar 2.6s ease-in-out 0.6s forwards; filter: url(#brillo); }
-    .nervio { fill: none; stroke: #c77dff; stroke-opacity: 0.4; stroke-width: 1; stroke-dasharray: 1; stroke-dashoffset: 1; animation: trazar 1.8s ease-in-out 2s forwards; }
-    @keyframes subir { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
-    @keyframes trazar { to { stroke-dashoffset: 0; } }
-  </style>
-  <defs>
-    <filter id="brillo" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="3" result="b"/>
+    <pattern id="malla" width="30" height="30" patternUnits="userSpaceOnUse">
+      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#39ff7a" stroke-opacity="0.05" stroke-width="1"/>
+    </pattern>
+    <filter id="resplandor" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur stdDeviation="2.4" result="b"/>
       <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
   </defs>
 
-  <rect class="base" width="1200" height="340" rx="14"/>
-  <rect width="1200" height="340" rx="14" fill="url(#halo)"/>
-  <rect width="1200" height="340" rx="14" fill="url(#malla)"/>
+  <style>
+    .mono { font-family: Menlo, Consolas, "Courier New", monospace; fill: #39ff7a; }
+    .etiqueta { font-family: Menlo, Consolas, "Courier New", monospace; font-size: 11px; letter-spacing: 2.5px; fill: #39ff7a; fill-opacity: 0.6; }
+    .dato { font-family: Menlo, Consolas, "Courier New", monospace; font-size: 15px; fill: #c9ffd9; }
+    .nombre { font: 700 56px "Helvetica Neue", Arial, sans-serif; fill: #eafff0; letter-spacing: -1px; animation: encender 1.4s ease-out both; }
+    .caja { fill: #39ff7a; fill-opacity: 0.03; stroke: #39ff7a; stroke-opacity: 0.5; stroke-width: 1; }
+    .esquina { fill: none; stroke: #39ff7a; stroke-width: 2; }
+    .cursor { animation: parpadeo 1s steps(1) infinite; }
+    .luz { animation: parpadeo 1.6s steps(1) infinite; }
+    .barrido { animation: deslizar 6s linear infinite; }
+    .aparece { animation: encender 1.2s ease-out both; }
+    @keyframes parpadeo { 50% { opacity: 0; } }
+    @keyframes parpadeo-suave { 0%, 100% { opacity: 1; } 92% { opacity: 1; } 93% { opacity: 0.7; } 94% { opacity: 1; } }
+    @keyframes encender { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes deslizar { from { transform: translateY(-40px); } to { transform: translateY(420px); } }
+  </style>
 
-  <path class="hoja" pathLength="1" d="M 960 78 C 1012 104, 1034 146, 1026 186 C 1016 228, 984 252, 960 258 C 936 248, 904 222, 896 184 C 888 144, 908 102, 960 78 Z"/>
-  <path class="nervio" pathLength="1" d="M 960 94 C 958 146, 960 206, 956 250"/>
-  <path class="nervio" pathLength="1" d="M 962 146 C 976 150, 986 158, 994 170"/>
-  <path class="nervio" pathLength="1" d="M 958 200 C 946 204, 936 212, 928 222"/>
+  <rect width="1200" height="380" rx="12" fill="#030603"/>
+  <rect width="1200" height="380" rx="12" fill="url(#malla)"/>
+  <rect width="1200" height="380" rx="12" fill="url(#glow)"/>
 
-  <text class="etiqueta" x="72" y="92">SISTEMAS COMPLEJOS · INTELIGENCIA ARTIFICIAL</text>
-  <text class="nombre" x="72" y="170">Jessica Melani Romero Lora</text>
-  <text class="rol" x="74" y="212">Detección sistémica de anomalías con datos y procesos</text>
-  <rect class="regla" x="74" y="248" width="120" height="2" rx="1" pathLength="1"/>
+  <!-- Horizonte y montañas (lectura del paisaje de la referencia) -->
+  <path d="M 960 330 L 1010 300 L 1050 318 L 1100 286 L 1150 310 L 1200 292 L 1200 380 L 960 380 Z" fill="url(#montana)"/>
+  <path d="M 960 330 L 1010 300 L 1050 318 L 1100 286 L 1150 310 L 1200 292" fill="none" stroke="#39ff7a" stroke-opacity="0.45" stroke-width="1"/>
+
+  <!-- Nave sobre el horizonte -->
+  <g>
+    <ellipse cx="1060" cy="150" rx="130" ry="16" fill="none" stroke="#39ff7a" stroke-opacity="0.7" stroke-width="1.2"/>
+    <ellipse cx="1060" cy="146" rx="82" ry="20" fill="#39ff7a" fill-opacity="0.05" stroke="#39ff7a" stroke-opacity="0.6"/>
+    <path d="M 1000 140 Q 1060 96 1120 140" fill="none" stroke="#39ff7a" stroke-opacity="0.6"/>
+    <circle class="luz" cx="998" cy="152" r="2.2" fill="#c9ffd9" style="animation-delay:0s"/>
+    <circle class="luz" cx="1030" cy="161" r="2.2" fill="#c9ffd9" style="animation-delay:0.4s"/>
+    <circle class="luz" cx="1060" cy="164" r="2.2" fill="#c9ffd9" style="animation-delay:0.8s"/>
+    <circle class="luz" cx="1090" cy="161" r="2.2" fill="#c9ffd9" style="animation-delay:1.2s"/>
+    <circle class="luz" cx="1122" cy="152" r="2.2" fill="#c9ffd9" style="animation-delay:1.6s"/>
+  </g>
+
+  <!-- Encabezado HUD -->
+  <text class="etiqueta" x="48" y="46">PERFIL // JMRL-01</text>
+  <text class="etiqueta" x="1000" y="46">ESTADO</text>
+  <circle class="luz" cx="1072" cy="42" r="4" fill="#39ff7a"/>
+  <text class="etiqueta" x="1082" y="46">ACTIVO</text>
+  <line x1="48" y1="62" x2="1152" y2="62" stroke="#39ff7a" stroke-opacity="0.35"/>
+
+  <!-- Identidad -->
+  <text class="etiqueta" x="64" y="118">IDENTIDAD</text>
+  <text class="nombre" x="64" y="176">Jessica Melani Romero Lora</text>
+  <text class="dato" x="66" y="208">Científica de sistemas complejos · IA para detección sistémica de anomalías</text>
+
+  <!-- Paneles de datos -->
+  <g class="aparece" style="animation-delay:0.6s">
+    <rect class="caja" x="64" y="236" width="280" height="76" rx="4"/>
+    <text class="etiqueta" x="82" y="258">ROL</text>
+    <text class="dato" x="82" y="282">Data Quality Analyst</text>
+    <text class="etiqueta" x="82" y="302" style="fill-opacity:0.5">SHIFT TECHNOLOGY</text>
+  </g>
+  <g class="aparece" style="animation-delay:0.8s">
+    <rect class="caja" x="364" y="236" width="280" height="76" rx="4"/>
+    <text class="etiqueta" x="382" y="258">FORMACIÓN</text>
+    <text class="dato" x="382" y="282">Maestría en IA · UPMH</text>
+    <text class="etiqueta" x="382" y="302" style="fill-opacity:0.5">BIG DATA · EN CURSO</text>
+  </g>
+  <g class="aparece" style="animation-delay:1s">
+    <rect class="caja" x="664" y="236" width="280" height="76" rx="4"/>
+    <text class="etiqueta" x="682" y="258">LÍNEAS DE TRABAJO</text>
+    <text class="dato" x="682" y="282">Visión artificial</text>
+    <text class="dato" x="682" y="302" style="font-size:13px; fill-opacity:0.8">Process mining · Evaluación</text>
+  </g>
+
+  <!-- Esquinas de encuadre -->
+  <path class="esquina" d="M 40 22 L 40 14 L 48 14"/>
+  <path class="esquina" d="M 1160 22 L 1160 14 L 1152 14"/>
+  <path class="esquina" d="M 40 358 L 40 366 L 48 366"/>
+  <path class="esquina" d="M 1160 358 L 1160 366 L 1152 366"/>
+
+  <!-- Cursor de terminal -->
+  <text class="mono" x="64" y="342" font-size="14">&gt; sistema listo<tspan class="cursor"> _</tspan></text>
+
+  <!-- Barrido y viñeta -->
+  <rect class="barrido" x="0" y="0" width="1200" height="40" fill="#39ff7a" fill-opacity="0.04"/>
+  <rect width="1200" height="380" rx="12" fill="url(#lineas)"/>
+  <rect width="1200" height="380" rx="12" fill="url(#vineta)"/>
 </svg>
